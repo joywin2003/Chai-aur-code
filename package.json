@@ -1,0 +1,29 @@
+{
+  "name": "chai-aur-code",
+  "version": "1.0.0",
+  "description": "backend using node and express to learn",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/joywin2003/Chai-aur-code.git"
+  },
+  "keywords": [
+    "javascript",
+    "mongo",
+    "express",
+    "node"
+  ],
+  "author": "Joywin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joywin2003/Chai-aur-code/issues"
+  },
+  "homepage": "https://github.com/joywin2003/Chai-aur-code#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
