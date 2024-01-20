@@ -22,6 +22,10 @@ connectDB()
     process.exit(1);
   });
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+})
+
 /*
 import express from "express"
 const app = express()
