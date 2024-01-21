@@ -71,7 +71,7 @@ userSchema.methods.generateAccessToken = function () {
             email: this.email,
             fullName: this.fullName,
         },
-        process.env.JWT_SECRET_KEY,
+        process.env.ACCESS_TOKEN_EXPIRY,
         { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 };
@@ -80,12 +80,9 @@ userSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
             _id: this._id,
-            username: this.username,
-            email: this.email,
-            fullName: this.fullName,
         },
-        process.env.JWT_SECRET_KEY,
-        { expiresIn: process.env.JWT_EXPIRES_IN }
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
     );
 };
 
