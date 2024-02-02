@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 import app from "./app.js";
+import { response } from "express";
 
 dotenv.config({
   path: "./.env",
@@ -22,29 +23,19 @@ connectDB()
     process.exit(1);
   });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-})
 
-/*
-import express from "express"
-const app = express()
-( async () => {
-    try {
-        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
-        app.on("errror", (error) => {
-            console.log("ERRR: ", error);
-            throw error
-        })
-
-        app.listen(process.env.PORT, () => {
-            console.log(`App is listening on port ${process.env.PORT}`);
-        })
-
-    } catch (error) {
-        console.error("ERROR: ", error)
-        throw err
-    }
-})()
-
-*/
+app.post("/address", (req, res) => {
+  const input = req.query["input"];
+  fetch("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=mang&key=AIzaSyDbaZ9VWDglTpdsz40yUq6dORroo1TVeig")
+      .then((response) => response.json())
+      .then((data) => {
+          const predictions = data["predictions"];
+          const descriptions = predictions.map((element) => element["description"]);
+          
+          res.json({ predictions: descriptions });
+      })
+      .catch((error) => {
+          console.error("Error fetching data:", error);
+          res.status(500).json({ error: "Internal Server Error" });
+      });
+});
