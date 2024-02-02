@@ -6,7 +6,6 @@ const userSchema = new Schema(
     {
         username: {
             type: String,
-            required: true,
             unique: true,
             lowercase: true,
             trim: true,
@@ -14,20 +13,17 @@ const userSchema = new Schema(
         },
         email: {
             type: String,
-            required: true,
             unique: true,
             lowecase: true,
             trim: true,
         },
         fullName: {
             type: String,
-            required: true,
             trim: true,
             index: true,
         },
         avatar: {
             type: String, // cloudinary url
-            required: true,
         },
         coverImage: {
             type: String, // cloudinary url
@@ -52,14 +48,17 @@ const userSchema = new Schema(
 );
 
 userSchema.pre("save", async function (next) {
+    console.log("pre save");
     if (!this.isModified("password")) {
         next();
     }
     this.password = await bcrypt.hash(this.password, 10);
+    console.log("post save");
     next();
 });
 
 userSchema.methods.isPasswordCorrect = async function (password) {
+    console.log(password, this.password);
     return bcrypt.compare(password, this.password);
 };
 
@@ -71,7 +70,7 @@ userSchema.methods.generateAccessToken = function () {
             email: this.email,
             fullName: this.fullName,
         },
-        process.env.ACCESS_TOKEN_EXPIRY,
+        process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 };
