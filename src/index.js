@@ -24,18 +24,4 @@ connectDB()
   });
 
 
-app.post("/address", (req, res) => {
-  const input = req.query["input"];
-  fetch("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=mang&key=AIzaSyDbaZ9VWDglTpdsz40yUq6dORroo1TVeig")
-      .then((response) => response.json())
-      .then((data) => {
-          const predictions = data["predictions"];
-          const descriptions = predictions.map((element) => element["description"]);
-          
-          res.json({ predictions: descriptions });
-      })
-      .catch((error) => {
-          console.error("Error fetching data:", error);
-          res.status(500).json({ error: "Internal Server Error" });
-      });
-});
+
